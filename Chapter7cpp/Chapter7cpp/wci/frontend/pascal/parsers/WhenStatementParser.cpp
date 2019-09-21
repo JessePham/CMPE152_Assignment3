@@ -56,30 +56,25 @@ WhenStatementParser::WhenStatementParser(PascalParserTD *parent)
 
 ICodeNode *WhenStatementParser::parse_statement(Token *token) throw (string)
 {
-    token = next_token(token);  // consume the IF
+    token = next_token(token); 
 
-    // Create an IF node.
+    
     ICodeNode *when_node =
             ICodeFactory::create_icode_node((ICodeNodeType) NT_WHEN);
 
 
-    // Parse the expression.
-    // The IF node adopts the expression subtree as its first child.
     ExpressionParser expression_parser(this);
     when_node->add_child(expression_parser.parse_statement(token));
 
-    // Synchronize at the THEN.
     token = synchronize(WHEN_SET);
     if (token->get_type() == (TokenType) PT_RIGHT_ARROW)
     {
-        token = next_token(token);  // consume the RIGHT_ARROW
+        token = next_token(token); 
     }
     else {
         error_handler.flag(token, MISSING_RIGHT_ARROW, this);
     }
 
-    // Parse the THEN statement.
-    // The IF node adopts the statement subtree as its second child.
     StatementParser statement_parser(this);
     when_node->add_child(statement_parser.parse_statement(token));
     token = current_token();
