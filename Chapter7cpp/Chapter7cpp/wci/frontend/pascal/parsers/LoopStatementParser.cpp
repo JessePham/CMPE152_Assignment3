@@ -46,7 +46,7 @@ ICodeNode *LoopStatementParser::parse_statement(Token *token)
     // The TEST node adopts the expression subtree as its only child.
     // The LOOP node adopts the TEST node.
     ExpressionParser expression_parser(this);
-    test_node->add_child(expression_parser.parse_statement(token));
+    //test_node->add_child(expression_parser.parse_statement(token));
     loop_node->add_child(test_node);
 
     return loop_node;
